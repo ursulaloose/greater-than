@@ -1,0 +1,66 @@
+sprites.onOverlap(SpriteKind.Player, SpriteKind.Projectile, function (sprite, otherSprite) {
+    info.changeScoreBy(1)
+    otherSprite.destroy()
+    if (info.score() > 5) {
+        mySprite.sayText("too many tacos")
+    }
+})
+let projectile: Sprite = null
+let mySprite: Sprite = null
+mySprite = sprites.create(img`
+    . . . . . . . f f . . . . . . . 
+    . . . . . f f 4 4 f f . . . . . 
+    . . . . f 5 4 5 5 4 5 f . . . . 
+    . . . f e 4 5 5 5 5 4 e f . . . 
+    . . f b 3 e 4 4 4 4 e 3 b f . . 
+    . f e 3 3 3 3 3 3 3 3 3 3 e f . 
+    . f 3 3 e b 3 e e 3 b e 3 3 f . 
+    . f b 3 f f e e e e f f 3 b f . 
+    f f b b f b f e e f b f b b f f 
+    f b b b e 1 f 4 4 f 1 e b b b f 
+    . f b b e e 4 4 4 4 4 f b b f . 
+    . . f 4 4 4 e d d d b f e f . . 
+    . . f e 4 4 e d d d d c 4 e . . 
+    . . . f e e d d b d b b f e . . 
+    . . . f f 1 d 1 d 1 1 f f . . . 
+    . . . . . f f f b b f . . . . . 
+    `, SpriteKind.Player)
+controller.moveSprite(mySprite, 100, 100)
+mySprite.setStayInScreen(true)
+game.splash("collect 5 tacos")
+game.onUpdateInterval(500, function () {
+    projectile = sprites.createProjectileFromSide(img`
+        ..............eeeeeee...........
+        ............ee455662e2e.........
+        ..........ee45556723e2688.......
+        .........e46776677232e777668....
+        ........e46745554772227776778...
+        .......4448744444777766777678...
+        ......4522e7777776777766676668..
+        .....4523227766722e666eeeee888..
+        ....455232e76672322e4555dddd48..
+        ...44567777554623e455ddddddddd4.
+        ...e66774554477e455dddd55554dd44
+        ..e46777444677e55dd55555d55dddd4
+        ..e5668677666e5dd555555555555dde
+        .e45544e8776e5d555554555555555de
+        .e554eeee66e5d5555d55555dddd54de
+        .e55ee44fee5d5d555555d5d5dddddde
+        e454eeeefe45d55555555555dd4ddde.
+        e5e4eefffe5d55555555d5555dddde..
+        e5ee4eeff45d555555555555dddde...
+        e5eeeeffe5d55d555d5555d5ddde....
+        e5ffefeee5d55545555555ddd4e.....
+        e5ffffffe545555555d5d4ddee......
+        e54efeff45d55d55555dddde........
+        e5eeeffe5dd5555545dddee.........
+        e4eeefff5d5555d55ddde...........
+        e4efefff5d5d55555d4e............
+        .e4efffe5d555555dee.............
+        .e54eeee5d545dd4e...............
+        ..e554ee5dddddee................
+        ...ee5544dddee..................
+        .....eeeeeee....................
+        ................................
+        `, randint(-30, 30), randint(-30, 30))
+})
